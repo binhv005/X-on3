@@ -432,43 +432,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. SECTION: SHOP US IRL - 50/50 Layout */}
-      <section className="relative w-full overflow-hidden bg-[#faf7f5] border-t border-[#f0e6e2] py-8 sm:py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-center">
-            {/* Left 50%: Image - Full uncropped view */}
-            <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-sm sm:max-w-md aspect-[681/1024] rounded-2xl overflow-hidden shadow-lg bg-white">
-                <Image
-                  src="/images/shop-irl-bg.png"
-                  alt="Shop US IRL"
-                  fill
-                  priority
-                  quality={100}
-                  unoptimized
-                  className="object-contain sm:object-cover"
-                />
-              </div>
-            </div>
+      {/* 7. SECTION: SHOP US IRL - Full 50/50 Edge-to-Edge Split */}
+      <section className="relative w-full overflow-hidden bg-white border-t border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-stretch min-h-[400px] sm:min-h-[480px] lg:min-h-[580px]">
+          {/* Left 50%: Full Edge-to-Edge Image without padding */}
+          <div className="relative w-full h-[360px] sm:h-[460px] md:h-full min-h-[360px] md:min-h-full">
+            <Image
+              src="/images/shop-irl-bg.png"
+              alt="Shop US IRL"
+              fill
+              priority
+              quality={100}
+              unoptimized
+              className="object-cover object-center"
+            />
+          </div>
 
-            {/* Right 50%: Content & Button */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-4 sm:space-y-6">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-black font-sans leading-tight">
-                SHOP US IRL
-              </h2>
-              <p className="text-xs sm:text-sm md:text-base text-neutral-600 max-w-md leading-relaxed">
-                Visit our physical studio in Kissimmee, Florida to experience our handmade press-on nail collections, custom fit consultations, and exclusive in-store designs.
-              </p>
-              <div className="pt-2">
-                <a
-                  href="https://www.google.com/maps/place/3168+Bill+Beck+Blvd,+Kissimmee,+FL+34744,+Hoa+K%E1%BB%B3/@28.3421851,-81.384924,96m/data=!3m1!1e3!4m6!3m5!1s0x88dd86f7f805bafd:0x719187b51bbcb7ff!8m2!3d28.3423066!4d-81.3845875!16s%2Fg%2F11bw40bzvw!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkyMS4wIKXMDSoASAFQAw%3D%3D"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-8 py-3.5 bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-md cursor-pointer"
-                >
-                  FIND US
-                </a>
-              </div>
+          {/* Right 50%: Title & Button Only */}
+          <div className="flex flex-col items-center justify-center text-center px-6 sm:px-12 lg:px-16 py-12 sm:py-16 space-y-5 sm:space-y-6 bg-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-black font-sans leading-tight">
+              SHOP US IRL
+            </h2>
+            <div>
+              <a
+                href="https://www.google.com/maps/place/3168+Bill+Beck+Blvd,+Kissimmee,+FL+34744,+Hoa+K%E1%BB%B3/@28.3421851,-81.384924,96m/data=!3m1!1e3!4m6!3m5!1s0x88dd86f7f805bafd:0x719187b51bbcb7ff!8m2!3d28.3423066!4d-81.3845875!16s%2Fg%2F11bw40bzvw!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkyMS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-9 py-3.5 bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-md cursor-pointer"
+              >
+                FIND US
+              </a>
             </div>
           </div>
         </div>
