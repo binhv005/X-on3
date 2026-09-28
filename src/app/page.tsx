@@ -432,11 +432,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. SECTION: SHOP US IRL - Full 50/50 Edge-to-Edge Split */}
-      <section className="relative w-full overflow-hidden bg-white border-t border-gray-100">
-        <div className="grid grid-cols-1 md:grid-cols-2 items-stretch min-h-[400px] sm:min-h-[480px] lg:min-h-[580px]">
-          {/* Left 50%: Full Edge-to-Edge Image without padding */}
-          <div className="relative w-full h-[360px] sm:h-[460px] md:h-full min-h-[360px] md:min-h-full">
+      {/* 7. SECTION: SHOP US IRL - Seamless Harmonious Split */}
+      <section className="relative w-full overflow-hidden bg-[#faf1ec] border-t border-[#eedcd2]">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-stretch min-h-[420px] sm:min-h-[500px] lg:min-h-[580px]">
+          {/* Left 50%: Image with smooth seamless fade on the right edge */}
+          <div className="relative w-full h-[360px] sm:h-[460px] md:h-full min-h-[360px] md:min-h-full overflow-hidden">
             <Image
               src="/images/shop-irl-bg.png"
               alt="Shop US IRL"
@@ -446,22 +446,30 @@ export default function HomePage() {
               unoptimized
               className="object-cover object-center"
             />
+            {/* Seamless gradient fade blending the image into the right background tone */}
+            <div className="hidden md:block absolute inset-y-0 right-0 w-36 lg:w-52 bg-gradient-to-r from-transparent to-[#faf1ec] pointer-events-none" />
+            <div className="md:hidden absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#faf1ec] pointer-events-none" />
           </div>
 
-          {/* Right 50%: Title & Button Only */}
-          <div className="flex flex-col items-center justify-center text-center px-6 sm:px-12 lg:px-16 py-12 sm:py-16 space-y-5 sm:space-y-6 bg-white">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-black font-sans leading-tight">
-              SHOP US IRL
-            </h2>
-            <div>
-              <a
-                href="https://www.google.com/maps/place/3168+Bill+Beck+Blvd,+Kissimmee,+FL+34744,+Hoa+K%E1%BB%B3/@28.3421851,-81.384924,96m/data=!3m1!1e3!4m6!3m5!1s0x88dd86f7f805bafd:0x719187b51bbcb7ff!8m2!3d28.3423066!4d-81.3845875!16s%2Fg%2F11bw40bzvw!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkyMS4wIKXMDSoASAFQAw%3D%3D"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-9 py-3.5 bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-md cursor-pointer"
-              >
-                FIND US
-              </a>
+          {/* Right 50%: Harmonious Matching Tone with Title & Button */}
+          <div className="relative flex flex-col items-center justify-center text-center px-6 sm:px-12 lg:px-16 py-12 sm:py-16 space-y-5 sm:space-y-6 bg-[#faf1ec]">
+            <div className="relative z-10 space-y-3 sm:space-y-4 max-w-md">
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-rose-500 block">
+                Bespoke Nail Art Studio
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-neutral-900 font-sans leading-tight">
+                SHOP US IRL
+              </h2>
+              <div className="pt-3">
+                <a
+                  href="https://www.google.com/maps/place/3168+Bill+Beck+Blvd,+Kissimmee,+FL+34744,+Hoa+K%E1%BB%B3/@28.3421851,-81.384924,96m/data=!3m1!1e3!4m6!3m5!1s0x88dd86f7f805bafd:0x719187b51bbcb7ff!8m2!3d28.3423066!4d-81.3845875!16s%2Fg%2F11bw40bzvw!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkyMS4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-9 py-3.5 bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all shadow-md hover:shadow-lg hover:scale-102 cursor-pointer"
+                >
+                  FIND US
+                </a>
+              </div>
             </div>
           </div>
         </div>
