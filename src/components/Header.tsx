@@ -50,49 +50,50 @@ export function Header() {
   };
 
   const renderActions = (showSubtotal = true) => (
-    <div className="flex items-center space-x-2 sm:space-x-4 text-gray-800">
+    <div className="flex items-center space-x-4 lg:space-x-6 text-neutral-800">
       {/* Avatar / User icon -> navigates to Admin / Account Login */}
       <Link
         href="/admin/login"
-        className="p-1.5 hover:text-rose-700 transition-colors"
+        className="p-1 hover:text-rose-700 transition-colors"
         title="Sign In / Account"
         aria-label="Sign In / Account"
       >
-        <User className="w-5 h-5 stroke-[1.5]" />
+        <User className="w-[19px] h-[19px] stroke-[1.6]" />
       </Link>
 
       <Link
         href="/shop"
         onClick={handleLinkClick}
-        className="p-1.5 hover:text-rose-700 transition-colors hidden sm:block"
+        className="p-1 hover:text-rose-700 transition-colors"
         title="Wishlist"
+        aria-label="Wishlist"
       >
-        <Heart className="w-5 h-5 stroke-[1.5]" />
+        <Heart className="w-[19px] h-[19px] stroke-[1.6]" />
       </Link>
 
       <button
         onClick={() => setSearchOpen(!searchOpen)}
-        className="p-1.5 hover:text-rose-700 transition-colors cursor-pointer"
+        className="p-1 hover:text-rose-700 transition-colors cursor-pointer"
         aria-label="Search"
       >
-        <Search className="w-5 h-5 stroke-[1.5]" />
+        <Search className="w-[19px] h-[19px] stroke-[1.6]" />
       </button>
 
       <button
         onClick={openCart}
-        className="p-1.5 hover:text-rose-700 transition-colors flex items-center gap-1.5 cursor-pointer"
+        className="p-1 hover:text-rose-700 transition-colors flex items-center gap-1.5 cursor-pointer"
         aria-label="Cart"
       >
-        <div className="relative">
-          <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
+        <div className="relative flex items-center">
+          <ShoppingBag className="w-[19px] h-[19px] stroke-[1.6]" />
           {totalCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+            <span className="absolute -top-1.5 -right-2 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
               {totalCount}
             </span>
           )}
         </div>
         {showSubtotal && (
-          <span className="hidden md:inline-block text-xs font-semibold text-gray-800">
+          <span className="text-[13px] font-bold text-neutral-900 tracking-tight">
             ${subtotal.toFixed(2)}
           </span>
         )}
@@ -101,7 +102,7 @@ export function Header() {
   );
 
   const renderNavLinks = () => (
-    <ul className="flex items-center gap-3.5 xl:gap-6 2xl:gap-8 text-[12px] xl:text-[13px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.14em] text-neutral-800 whitespace-nowrap shrink-0">
+    <ul className="flex items-center gap-5 xl:gap-8 text-[12.5px] xl:text-[13px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.12em] text-neutral-800 whitespace-nowrap shrink-0">
       <li className="shrink-0">
         <Link
           href="/"
@@ -340,55 +341,69 @@ export function Header() {
     <>
       {/* 1. Main Static Header in natural document flow (Zero layout shift / jump) */}
       <header className="relative w-full bg-white border-b border-gray-100 z-30">
-        {/* Top Header Row: Centered 3x Logo on Desktop / Bar on Mobile */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative flex items-center justify-between h-20 sm:h-28 md:h-36 lg:h-52">
-            {/* Left: Mobile hamburger */}
-            <div className="flex items-center lg:hidden">
-              <button
-                onClick={() => setMobileOpen(true)}
-                className="p-2 text-gray-800 hover:text-black focus:outline-hidden cursor-pointer"
-                aria-label="Open menu"
-              >
-                <Menu className="w-6 h-6 stroke-[1.5]" />
-              </button>
-            </div>
+        {/* Mobile Header Bar */}
+        <div className="lg:hidden max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-18">
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="p-2 text-gray-800 hover:text-black focus:outline-hidden cursor-pointer"
+            aria-label="Open menu"
+          >
+            <Menu className="w-6 h-6 stroke-[1.5]" />
+          </button>
 
-            {/* Left spacer on desktop */}
-            <div className="hidden lg:flex items-center" />
+          <Link
+            href="/"
+            onClick={handleLinkClick}
+            className="relative block h-12 w-32"
+          >
+            <Image
+              src="/images/logo-xon.png"
+              alt="X-ON Nails"
+              fill
+              priority
+              unoptimized
+              sizes="180px"
+              className="object-contain"
+            />
+          </Link>
 
-            {/* Center: Main Large Logo */}
-            <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none">
-              <Link
-                href="/"
-                onClick={handleLinkClick}
-                className="relative block pointer-events-auto transition-transform duration-300 hover:scale-105 h-12 sm:h-20 md:h-28 lg:h-44 w-32 sm:w-56 md:w-[380px] lg:w-[540px]"
-              >
-                <Image
-                  src="/images/logo-xon.png"
-                  alt="X-ON Nails"
-                  fill
-                  priority
-                  unoptimized
-                  sizes="(max-width: 768px) 320px, 600px"
-                  className="object-contain"
-                />
-              </Link>
-            </div>
-
-            {/* Right: Action Icons */}
-            {renderActions(true)}
-          </div>
+          {renderActions(false)}
         </div>
 
-        {/* Desktop Centered Navigation Bar */}
-        <nav className="hidden lg:block bg-white relative">
-          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-            <div className="flex items-center justify-center h-14">
+        {/* Desktop Header */}
+        <div className="hidden lg:block max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 pt-3 pb-2">
+          {/* Centered Logo */}
+          <div className="flex items-center justify-center">
+            <Link
+              href="/"
+              onClick={handleLinkClick}
+              className="relative block transition-transform duration-300 hover:scale-105 h-20 lg:h-24 w-60 lg:w-72"
+            >
+              <Image
+                src="/images/logo-xon.png"
+                alt="X-ON Nails"
+                fill
+                priority
+                unoptimized
+                sizes="360px"
+                className="object-contain"
+              />
+            </Link>
+          </div>
+
+          {/* Navigation Row: Menu in Center, Action Icons on Right */}
+          <div className="relative flex items-center justify-center h-12 mt-1">
+            {/* Centered Menu Links (shifted slightly to the left) */}
+            <nav className="flex items-center justify-center -translate-x-6 lg:-translate-x-10 xl:-translate-x-12">
               {renderNavLinks()}
+            </nav>
+
+            {/* Right-aligned Action Icons */}
+            <div className="absolute right-0 flex items-center">
+              {renderActions(true)}
             </div>
           </div>
-        </nav>
+        </div>
       </header>
 
       {/* 2. Floating Sticky Header (Single row: Logo on the side right next to Navbar) */}
