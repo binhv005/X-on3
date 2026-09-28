@@ -433,20 +433,22 @@ export default function HomePage() {
       </section>
 
       {/* 7. SECTION: SHOP US IRL */}
-      <section className="relative w-full overflow-hidden bg-white">
-        <div className="relative w-full">
+      <section className="relative w-full overflow-hidden bg-[#faf7f5]">
+        <div className="relative w-full h-[360px] sm:h-[440px] md:h-[500px] lg:h-[580px] flex items-center">
           <Image
-            src="/images/1-2.png"
-            alt="Shop US GIRL"
-            width={1024}
-            height={460}
+            src="/images/shop-irl-bg.png"
+            alt="Shop US IRL"
+            fill
             priority
-            className="w-full h-auto block"
             quality={100}
             unoptimized
+            className="object-cover object-left sm:object-[left_center]"
           />
-          <div className="absolute inset-0 flex items-start justify-end px-6 sm:px-12 md:px-16 lg:px-24 pt-8 sm:pt-12 md:pt-16 lg:pt-20 pointer-events-none">
-            <div className="text-right space-y-3 sm:space-y-4 pointer-events-auto">
+          {/* Soft gradient to keep the beautiful nail art visible while giving high contrast to text */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-white/95 sm:via-white/40 sm:to-white/90" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 md:px-16 lg:px-24 w-full flex justify-end">
+            <div className="text-right space-y-3 sm:space-y-4">
               <h2 className="whitespace-nowrap text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold uppercase tracking-tight text-black font-sans">
                 SHOP US IRL
               </h2>
@@ -455,7 +457,7 @@ export default function HomePage() {
                   href="https://www.google.com/maps/place/3168+Bill+Beck+Blvd,+Kissimmee,+FL+34744,+Hoa+K%E1%BB%B3/@28.3421851,-81.384924,96m/data=!3m1!1e3!4m6!3m5!1s0x88dd86f7f805bafd:0x719187b51bbcb7ff!8m2!3d28.3423066!4d-81.3845875!16s%2Fg%2F11bw40bzvw!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkyMS4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block px-7 py-3 bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-md"
+                  className="inline-block px-7 py-3 bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-md cursor-pointer"
                 >
                   FIND US
                 </a>
