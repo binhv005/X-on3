@@ -432,32 +432,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. SECTION: SHOP US IRL */}
-      <section className="relative w-full overflow-hidden bg-[#faf7f5]">
-        <div className="relative w-full h-[360px] sm:h-[440px] md:h-[500px] lg:h-[580px] flex items-center">
-          <Image
-            src="/images/shop-irl-bg.png"
-            alt="Shop US IRL"
-            fill
-            priority
-            quality={100}
-            unoptimized
-            className="object-cover object-left sm:object-[left_center]"
-          />
-          {/* Soft gradient to keep the beautiful nail art visible while giving high contrast to text */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-white/95 sm:via-white/40 sm:to-white/90" />
+      {/* 7. SECTION: SHOP US IRL - 50/50 Layout */}
+      <section className="relative w-full overflow-hidden bg-[#faf7f5] border-t border-[#f0e6e2] py-8 sm:py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-center">
+            {/* Left 50%: Image - Full uncropped view */}
+            <div className="flex items-center justify-center">
+              <div className="relative w-full max-w-sm sm:max-w-md aspect-[681/1024] rounded-2xl overflow-hidden shadow-lg bg-white">
+                <Image
+                  src="/images/shop-irl-bg.png"
+                  alt="Shop US IRL"
+                  fill
+                  priority
+                  quality={100}
+                  unoptimized
+                  className="object-contain sm:object-cover"
+                />
+              </div>
+            </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 md:px-16 lg:px-24 w-full flex justify-end">
-            <div className="text-right space-y-3 sm:space-y-4">
-              <h2 className="whitespace-nowrap text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold uppercase tracking-tight text-black font-sans">
+            {/* Right 50%: Content & Button */}
+            <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-4 sm:space-y-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-black font-sans leading-tight">
                 SHOP US IRL
               </h2>
-              <div>
+              <p className="text-xs sm:text-sm md:text-base text-neutral-600 max-w-md leading-relaxed">
+                Visit our physical studio in Kissimmee, Florida to experience our handmade press-on nail collections, custom fit consultations, and exclusive in-store designs.
+              </p>
+              <div className="pt-2">
                 <a
                   href="https://www.google.com/maps/place/3168+Bill+Beck+Blvd,+Kissimmee,+FL+34744,+Hoa+K%E1%BB%B3/@28.3421851,-81.384924,96m/data=!3m1!1e3!4m6!3m5!1s0x88dd86f7f805bafd:0x719187b51bbcb7ff!8m2!3d28.3423066!4d-81.3845875!16s%2Fg%2F11bw40bzvw!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDkyMS4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block px-7 py-3 bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-md cursor-pointer"
+                  className="inline-block px-8 py-3.5 bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-md cursor-pointer"
                 >
                   FIND US
                 </a>
