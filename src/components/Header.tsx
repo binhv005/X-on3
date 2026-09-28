@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
@@ -20,7 +20,18 @@ export function Header() {
   const [shopExpanded, setShopExpanded] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
   const { openCart, totalCount, subtotal } = useCart();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
@@ -37,11 +48,72 @@ export function Header() {
     scrollToTop();
   };
 
+  const renderActions = (showSubtotal = true) => (
+    <div className="flex items-center space-x-2 sm:space-x-4 text-gray-800">
+      {/* Avatar / User icon -> navigates to Admin / Account Login */}
+      <Link
+        href="/admin/login"
+        className="p-1.5 hover:text-rose-700 transition-colors"
+        title="Sign In / Account"
+        aria-label="Sign In / Account"
+      >
+        <User className="w-5 h-5 stroke-[1.5]" />
+      </Link>
+
+      <Link
+        href="/shop"
+        onClick={handleLinkClick}
+        className="p-1.5 hover:text-rose-700 transition-colors hidden sm:block"
+        title="Wishlist"
+      >
+        <Heart className="w-5 h-5 stroke-[1.5]" />
+      </Link>
+
+      <button
+        onClick={() => setSearchOpen(!searchOpen)}
+        className="p-1.5 hover:text-rose-700 transition-colors cursor-pointer"
+        aria-label="Search"
+      >
+        <Search className="w-5 h-5 stroke-[1.5]" />
+      </button>
+
+      <button
+        onClick={openCart}
+        className="p-1.5 hover:text-rose-700 transition-colors flex items-center gap-1.5 cursor-pointer"
+        aria-label="Cart"
+      >
+        <div className="relative">
+          <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
+          {totalCount > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+              {totalCount}
+            </span>
+          )}
+        </div>
+        {showSubtotal && (
+          <span className="hidden md:inline-block text-xs font-semibold text-gray-800">
+            ${subtotal.toFixed(2)}
+          </span>
+        )}
+      </button>
+    </div>
+  );
+
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-xs">
-      {/* Top Header Row: Hamburger - Logo - Icons */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-14 sm:h-16 md:h-18 lg:h-20">
+    <header className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-xs transition-all duration-300">
+      {/* Top Header Row: Centered 3x Logo when at top of page (and mobile top bar) */}
+      <div
+        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
+          isScrolled ? "lg:hidden" : ""
+        }`}
+      >
+        <div
+          className={`relative flex items-center justify-between transition-all duration-300 ease-in-out ${
+            isScrolled
+              ? "h-14 sm:h-16"
+              : "h-28 sm:h-36 md:h-44 lg:h-52"
+          }`}
+        >
           {/* Left: Mobile hamburger - only on mobile/tablet */}
           <div className="flex items-center lg:hidden">
             <button
@@ -53,15 +125,19 @@ export function Header() {
             </button>
           </div>
 
-          {/* Left spacer on desktop (no hamburger) */}
+          {/* Left spacer on desktop */}
           <div className="hidden lg:flex items-center" />
 
-          {/* Center: Logo - absolutely centered always */}
-          <div className="absolute left-1/2 -translate-x-1/2">
+          {/* Center: Logo - 3x large at top, normal on mobile when scrolled */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center pointer-events-none">
             <Link
               href="/"
               onClick={handleLinkClick}
-              className="relative block h-9 sm:h-11 md:h-13 lg:h-15 w-28 sm:w-36 md:w-[160px] lg:w-[182px] transition-transform hover:scale-105"
+              className={`relative block pointer-events-auto transition-all duration-300 ease-in-out hover:scale-105 ${
+                isScrolled
+                  ? "h-9 sm:h-11 w-28 sm:w-36"
+                  : "h-20 sm:h-28 md:h-36 lg:h-44 w-56 sm:w-72 md:w-[380px] lg:w-[540px]"
+              }`}
             >
               <Image
                 src="/images/logo-xon.png"
@@ -69,113 +145,76 @@ export function Header() {
                 fill
                 priority
                 unoptimized
-                sizes="(max-width: 768px) 150px, 182px"
+                sizes="(max-width: 768px) 320px, 600px"
                 className="object-contain"
               />
             </Link>
           </div>
 
           {/* Right: Icons (Account/Avatar, Wishlist, Search, Cart) */}
-          <div className="flex items-center space-x-2 sm:space-x-4 text-gray-800">
-            {/* Avatar / User icon -> navigates to Admin / Account Login */}
-            <Link
-              href="/admin/login"
-              className="p-1.5 hover:text-rose-700 transition-colors"
-              title="Sign In / Account"
-              aria-label="Sign In / Account"
-            >
-              <User className="w-5 h-5 stroke-[1.5]" />
-            </Link>
-
-            <Link
-              href="/shop"
-              onClick={handleLinkClick}
-              className="p-1.5 hover:text-rose-700 transition-colors hidden sm:block"
-              title="Wishlist"
-            >
-              <Heart className="w-5 h-5 stroke-[1.5]" />
-            </Link>
-
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="p-1.5 hover:text-rose-700 transition-colors"
-              aria-label="Search"
-            >
-              <Search className="w-5 h-5 stroke-[1.5]" />
-            </button>
-
-            <button
-              onClick={openCart}
-              className="p-1.5 hover:text-rose-700 transition-colors flex items-center gap-1.5"
-              aria-label="Cart"
-            >
-              <div className="relative">
-                <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
-                {totalCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                    {totalCount}
-                  </span>
-                )}
-              </div>
-              <span className="hidden md:inline-block text-xs font-semibold text-gray-800">
-                ${subtotal.toFixed(2)}
-              </span>
-            </button>
-          </div>
+          {renderActions(true)}
         </div>
-
-        {/* Search Bar Dropdown */}
-        {searchOpen && (
-          <div className="py-3 border-t border-gray-100">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (searchQuery.trim()) {
-                  window.location.href = `/shop?q=${encodeURIComponent(searchQuery.trim())}`;
-                }
-              }}
-              className="relative max-w-xl mx-auto"
-            >
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products..."
-                className="w-full pl-10 pr-4 py-2 text-xs border border-gray-300 rounded-md focus:outline-hidden focus:border-black"
-                autoFocus
-              />
-              <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-2.5" />
-            </form>
-          </div>
-        )}
       </div>
 
-      {/* Bottom Header Navigation: Centered Links + Mega Menu */}
-      <nav className="hidden lg:block border-t border-gray-100 bg-white relative">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <ul className="flex items-center justify-center gap-10 xl:gap-14 text-[13px] font-bold uppercase tracking-[0.14em] text-neutral-800 h-12">
-            <li>
-              <Link
-                href="/"
-                onClick={handleLinkClick}
-                className="hover:text-rose-700 transition-colors py-3"
+      {/* Desktop Navigation Bar */}
+      <nav className="hidden lg:block border-t border-gray-100 bg-white relative transition-all duration-300">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div
+            className={`flex items-center transition-all duration-300 ${
+              isScrolled ? "justify-between h-20 lg:h-24 py-2" : "justify-center h-14"
+            }`}
+          >
+            {/* Left group: Logo (shown before HOME when scrolled) + Menu items */}
+            <div className="flex items-center gap-3 xl:gap-5 min-w-0">
+              {/* Logo before HOME when scrolled - tightly fitted to artwork */}
+              <div
+                className={`transition-all duration-300 overflow-hidden flex items-center shrink-0 ${
+                  isScrolled
+                    ? "w-40 lg:w-48 xl:w-52 opacity-100 mr-1"
+                    : "w-0 opacity-0 pointer-events-none"
+                }`}
               >
-                HOME
-              </Link>
-            </li>
+                <Link
+                  href="/"
+                  onClick={handleLinkClick}
+                  className="relative block h-14 lg:h-16 xl:h-18 w-40 lg:w-48 xl:w-52 transition-transform hover:scale-105 shrink-0"
+                >
+                  <Image
+                    src="/images/logo-xon.png"
+                    alt="X-ON Nails"
+                    fill
+                    priority
+                    unoptimized
+                    sizes="250px"
+                    className="object-contain object-left"
+                  />
+                </Link>
+              </div>
 
-            {/* Shop Mega Menu */}
-            <li className="group py-3">
-              <Link
-                href="/shop"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.href = "/shop";
-                }}
-                className="hover:text-rose-700 transition-colors flex items-center gap-1.5"
-              >
-                SHOP <ChevronDown className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200 stroke-[2]" />
-              </Link>
+              {/* Navigation links - close to logo, single line */}
+              <ul className="flex items-center gap-3.5 xl:gap-6 2xl:gap-8 text-[12px] xl:text-[13px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.14em] text-neutral-800 whitespace-nowrap shrink-0">
+                <li className="shrink-0">
+                  <Link
+                    href="/"
+                    onClick={handleLinkClick}
+                    className="hover:text-rose-700 transition-colors py-3 whitespace-nowrap block"
+                  >
+                    HOME
+                  </Link>
+                </li>
+
+                {/* Shop Mega Menu */}
+                <li className="group py-3 shrink-0">
+                  <Link
+                    href="/shop"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.location.href = "/shop";
+                    }}
+                    className="hover:text-rose-700 transition-colors flex items-center gap-1.5 whitespace-nowrap"
+                  >
+                    SHOP <ChevronDown className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200 stroke-[2]" />
+                  </Link>
 
               {/* Mega Menu Dropdown */}
               <div className="absolute top-full left-1/2 -translate-x-1/2 w-[860px] max-w-[95vw] bg-white shadow-2xl rounded-2xl border border-gray-100 p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
@@ -327,58 +366,96 @@ export function Header() {
               </div>
             </li>
 
-            <li>
-              <Link
-                href="/about"
-                onClick={handleLinkClick}
-                className="hover:text-rose-700 transition-colors py-3"
-              >
-                OUR STORY
-              </Link>
-            </li>
+                <li className="shrink-0">
+                  <Link
+                    href="/about"
+                    onClick={handleLinkClick}
+                    className="hover:text-rose-700 transition-colors py-3 whitespace-nowrap block"
+                  >
+                    OUR STORY
+                  </Link>
+                </li>
 
-            <li>
-              <Link
-                href="/sizing-chart"
-                onClick={handleLinkClick}
-                className="hover:text-rose-700 transition-colors py-3"
-              >
-                FIT GUIDE
-              </Link>
-            </li>
+                <li className="shrink-0">
+                  <Link
+                    href="/sizing-chart"
+                    onClick={handleLinkClick}
+                    className="hover:text-rose-700 transition-colors py-3 whitespace-nowrap block"
+                  >
+                    FIT GUIDE
+                  </Link>
+                </li>
 
-            <li>
-              <Link
-                href="/wholesale-signup"
-                onClick={handleLinkClick}
-                className="hover:text-rose-700 transition-colors py-3"
-              >
-                WHOLESALE
-              </Link>
-            </li>
+                <li className="shrink-0">
+                  <Link
+                    href="/wholesale-signup"
+                    onClick={handleLinkClick}
+                    className="hover:text-rose-700 transition-colors py-3 whitespace-nowrap block"
+                  >
+                    WHOLESALE
+                  </Link>
+                </li>
 
-            <li>
-              <Link
-                href="/blog"
-                onClick={handleLinkClick}
-                className="hover:text-rose-700 transition-colors py-3"
-              >
-                JOURNAL
-              </Link>
-            </li>
+                <li className="shrink-0">
+                  <Link
+                    href="/blog"
+                    onClick={handleLinkClick}
+                    className="hover:text-rose-700 transition-colors py-3 whitespace-nowrap block"
+                  >
+                    JOURNAL
+                  </Link>
+                </li>
 
-            <li>
-              <Link
-                href="/contact-us"
-                onClick={handleLinkClick}
-                className="hover:text-rose-700 transition-colors py-3"
-              >
-                CONTACT
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
+                <li className="shrink-0">
+                  <Link
+                    href="/contact-us"
+                    onClick={handleLinkClick}
+                    className="hover:text-rose-700 transition-colors py-3 whitespace-nowrap block"
+                  >
+                    CONTACT
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Right: Action icons in nav bar when scrolled */}
+            <div
+              className={`transition-all duration-300 flex items-center shrink-0 ml-4 ${
+                isScrolled
+                  ? "opacity-100"
+                  : "w-0 opacity-0 pointer-events-none hidden"
+              }`}
+            >
+              {renderActions(true)}
+            </div>
+      </div>
+    </div>
+  </nav>
+
+  {/* Search Bar Dropdown */}
+  {searchOpen && (
+    <div className="py-3 border-t border-gray-100 bg-white shadow-md">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (searchQuery.trim()) {
+            window.location.href = `/shop?q=${encodeURIComponent(searchQuery.trim())}`;
+          }
+        }}
+        className="relative max-w-xl mx-auto px-4"
+      >
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search products..."
+          className="w-full pl-10 pr-4 py-2 text-xs border border-gray-300 rounded-md focus:outline-hidden focus:border-black"
+          autoFocus
+        />
+        <Search className="w-4 h-4 text-gray-400 absolute left-7.5 top-2.5" />
+      </form>
+    </div>
+  )}
 
       {/* Off-Canvas Sidebar / Drawer - Exact 1:1 match to original Lalafolie */}
       {mobileOpen && (
