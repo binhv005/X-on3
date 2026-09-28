@@ -371,13 +371,13 @@ export function Header() {
         </div>
 
         {/* Desktop Header */}
-        <div className="hidden lg:block max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 pt-3 pb-2">
-          {/* Centered Logo */}
+        <div className="hidden lg:block max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 pt-6 pb-2">
+          {/* Centered Large Logo */}
           <div className="flex items-center justify-center">
             <Link
               href="/"
               onClick={handleLinkClick}
-              className="relative block transition-transform duration-300 hover:scale-105 h-20 lg:h-24 w-60 lg:w-72"
+              className="relative block transition-transform duration-300 hover:scale-105 h-40 lg:h-48 xl:h-52 w-[480px] lg:w-[580px] xl:w-[640px]"
             >
               <Image
                 src="/images/logo-xon.png"
@@ -385,7 +385,7 @@ export function Header() {
                 fill
                 priority
                 unoptimized
-                sizes="360px"
+                sizes="(max-width: 768px) 400px, 800px"
                 className="object-contain"
               />
             </Link>
